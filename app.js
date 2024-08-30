@@ -5,7 +5,11 @@ const btnGenerateMultiple = document.getElementById("generate-multiple");
 const cardsContainer = document.getElementById("cardsContainer");
 const searchInput = document.getElementById("search");
 
-btnCreate.addEventListener("click", getCharacter);
+btnCreate.addEventListener("click", ()=>{
+    cardsContainer.innerHTML = '';
+    getCharacter();
+
+});
 btnGenerateMultiple.addEventListener("click", showModal);
 searchInput.addEventListener("input", filterCharacters);
 
@@ -50,13 +54,16 @@ function closeModal() {
 }
 
 document.getElementById("confirm-generate").onclick = function () {
+
+    cardsContainer.innerHTML = '';  
+
     const quantity = parseInt(document.getElementById("card-quantity").value, 10);
     if (isNaN(quantity) || quantity < 1 || quantity > 10) {
         alert("Por favor, ingresa un número válido entre 1 y 10.");
         return;
     }
 
-    cardsContainer.innerHTML = '';
+
 
 
     for (let i = 0; i < quantity; i++) {
@@ -70,15 +77,12 @@ document.getElementById("confirm-generate").onclick = function () {
 
 function filterCharacters() {
     const searchTerm = searchInput.value.toLowerCase();
-    const cards = document.querySelectorAll(".cardCharacter");
-
+    const cards = document.querySelectorAll(".cardCharacter")
+    
     cards.forEach(card => {
-        const name = card.querySelector("h2").textContent.toLowerCase();
-        if (name.includes(searchTerm)) {
-            card.style.display = "block"; 
-        } else {
-            card.style.display = "none"; 
-        }
-    });
+        const name = card.querySelector('h2').textContent.toLowerCase();
+    
+        card.style.display = name.includes(searchTerm)? "flex" : "none";
+        });
 }
 
